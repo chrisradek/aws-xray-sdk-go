@@ -20,7 +20,7 @@ install:
     [ $TRAVIS_GO_VERSION == "1.8.x" ]; then
       glide install;
     elif [ $TRAVIS_GO_VERSION == "1.9.x" ] ||
-    [ $TRAVIS_GO_VERSION == "1.10.x"]; then
+    [ $TRAVIS_GO_VERSION == "1.10.x" ]; then
       dep ensure;
     else
       env GO111MODULE=on go get;
