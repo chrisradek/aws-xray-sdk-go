@@ -17,11 +17,11 @@ install:
   - go get -v github.com/Masterminds/glide
   - cd $GOPATH/src/github.com/Masterminds/glide && git checkout 67790b3dbede72cfdc54aa53be4706322c9499e0 && go install && cd -
   - echo $TRAVIS_GO_VERSION
-  - if [ $TRAVIS_GO_VERSION == "1.7.x" ] ||
-    [ $TRAVIS_GO_VERSION == "1.8.x" ]; then
+  - if [ $TRAVIS_GO_VERSION == "1.7" ] ||
+    [ $TRAVIS_GO_VERSION == "1.8" ]; then
       glide install;
-    elif [ $TRAVIS_GO_VERSION == "1.9.x" ] ||
-    [ $TRAVIS_GO_VERSION == "1.10.x" ]; then
+    elif [ $TRAVIS_GO_VERSION == "1.9" ] ||
+    [ $TRAVIS_GO_VERSION == "1.10" ]; then
       dep ensure;
     else
       env GO111MODULE=on go get;
