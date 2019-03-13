@@ -19,22 +19,26 @@ env:
 before_install:
   - echo $TRAVIS_GO_VERSION
   - if [ $TRAVIS_GO_VERSION == "1.7" ] ||
-    [ $TRAVIS_GO_VERSION == "1.8" ]; then
-      go get -v github.com/Masterminds/glide;
-      cd $GOPATH/src/github.com/Masterminds/glide && git checkout 67790b3dbede72cfdc54aa53be4706322c9499e0 && go install && cd -;
-
+    [ $TRAVIS_GO_VERSION ] == "1.8" ]; then
+      export DEP_MANAGEMENT_TOOL="GLIDE"
     elif [ $TRAVIS_GO_VERSION == "1.9" ] ||
     [ $TRAVIS_GO_VERSION == "1.10" ]; then
+      export DEP_MANAGEMENT_TOOL="DEP"
+    else
+      export DEP_MANAGEMENT_TOOL="MODULE"
+    fi
+  - if [ $DEP_MANAGEMENT_TOOL == "GLIDE" ]; then
+      go get -v github.com/Masterminds/glide;
+      cd $GOPATH/src/github.com/Masterminds/glide && git checkout 67790b3dbede72cfdc54aa53be4706322c9499e0 && go install && cd -;
+    elif [ $DEP_MANAGEMENT_TOOL == "DEP" ]; then
       curl -L -s https://github.com/golang/dep/releases/download/v${DEP_VERSION}/dep-linux-amd64 -o $GOPATH/bin/dep;
       chmod +x $GOPATH/bin/dep;
     fi
 
 install:
-  - if [ $TRAVIS_GO_VERSION == "1.7" ] ||
-    [ $TRAVIS_GO_VERSION == "1.8" ]; then
+  - if [ $DEP_MANAGEMENT_TOOL == "GLIDE" ]; then
       glide install;
-    elif [ $TRAVIS_GO_VERSION == "1.9" ] ||
-    [ $TRAVIS_GO_VERSION == "1.10" ]; then
+    elif [ $DEP_MANAGEMENT_TOOL == "DEP" ]; then
       dep ensure;
     else
       go get;
