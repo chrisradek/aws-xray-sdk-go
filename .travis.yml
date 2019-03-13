@@ -14,8 +14,7 @@ go:
   - "tip"
 
 env:
-  - DEP_VERSION="0.5.1"
-  - GO111MODULE="on"
+  - DEP_VERSION="0.5.1" GO111MODULE="on"
 
 before_install:
   - if [ $TRAVIS_GO_VERSION == "1.9" ] ||
