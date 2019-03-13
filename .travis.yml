@@ -19,7 +19,7 @@ env:
 before_install:
   - echo $TRAVIS_GO_VERSION
   - if [ $TRAVIS_GO_VERSION == "1.7" ] ||
-    [ $TRAVIS_GO_VERSION ] == "1.8" ]; then
+    [ $TRAVIS_GO_VERSION == "1.8" ]; then
       export DEP_MANAGEMENT_TOOL="GLIDE";
     elif [ $TRAVIS_GO_VERSION == "1.9" ] ||
     [ $TRAVIS_GO_VERSION == "1.10" ]; then
