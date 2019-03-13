@@ -20,12 +20,12 @@ before_install:
   - echo $TRAVIS_GO_VERSION
   - if [ $TRAVIS_GO_VERSION == "1.7" ] ||
     [ $TRAVIS_GO_VERSION ] == "1.8" ]; then
-      export DEP_MANAGEMENT_TOOL="GLIDE"
+      export DEP_MANAGEMENT_TOOL="GLIDE";
     elif [ $TRAVIS_GO_VERSION == "1.9" ] ||
     [ $TRAVIS_GO_VERSION == "1.10" ]; then
-      export DEP_MANAGEMENT_TOOL="DEP"
+      export DEP_MANAGEMENT_TOOL="DEP";
     else
-      export DEP_MANAGEMENT_TOOL="MODULE"
+      export DEP_MANAGEMENT_TOOL="MODULE";
     fi
   - if [ $DEP_MANAGEMENT_TOOL == "GLIDE" ]; then
       go get -v github.com/Masterminds/glide;
