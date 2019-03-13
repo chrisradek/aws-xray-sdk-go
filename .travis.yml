@@ -27,6 +27,7 @@ before_install:
     else
       export DEP_MANAGEMENT_TOOL="MODULE";
     fi
+  - echo $DEP_MANAGEMENT_TOOL
   - if [ $DEP_MANAGEMENT_TOOL == "GLIDE" ]; then
       go get -v github.com/Masterminds/glide;
       cd $GOPATH/src/github.com/Masterminds/glide && git checkout 67790b3dbede72cfdc54aa53be4706322c9499e0 && go install && cd -;
