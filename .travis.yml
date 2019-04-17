@@ -16,7 +16,7 @@ notifications:
     recipients:
       - aws-xray-peryton@amazon.com
     on_success: never
-    on_failure: always
+    on_failure: never
 
 env:
   - DEP_VERSION="0.5.1" GO111MODULE="on"
