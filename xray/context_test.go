@@ -11,6 +11,7 @@ package xray
 import (
 	"context"
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/aws/aws-xray-sdk-go/strategy/exception"
@@ -54,11 +55,18 @@ func TestValidAnnotations(t *testing.T) {
 	if e := AddAnnotation(ctx, "float", 1.1); e != nil {
 		err = append(err, e)
 	}
+	fmt.Printf("%+v\n", err)
+	fmt.Println(err)
 	root.Close(err)
 
 	s, e := TestDaemon.Recv()
 	assert.NoError(t, e)
 
+	if s.Annotations["string"] == nil {
+		fmt.Printf("%+v\n", s)
+		fmt.Printf("%+v\n", s.Annotations)
+		fmt.Println(s.Annotations)
+	}
 	assert.Equal(t, "str", s.Annotations["string"])
 	assert.Equal(t, 1.0, s.Annotations["int"]) //json encoder turns this into a float64
 	assert.Equal(t, 1.1, s.Annotations["float"])

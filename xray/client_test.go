@@ -259,7 +259,7 @@ func TestRoundTripReuseDatarace(t *testing.T) {
 	n := 30
 	wg.Add(n)
 	for i := 0; i < n; i++ {
-		go func() {
+		go func(j int) {
 			defer wg.Done()
 			reader := strings.NewReader("")
 			ctx, root := BeginSegment(context.Background(), "Test")
@@ -267,10 +267,12 @@ func TestRoundTripReuseDatarace(t *testing.T) {
 			req = req.WithContext(ctx)
 			res, err := rt.RoundTrip(req)
 			ioutil.ReadAll(res.Body)
+			fmt.Printf("Number: %d\n", j)
 			res.Body.Close() // make net/http/transport.go connection reuse
+			fmt.Printf("Number %d closed.\n", j)
 			root.Close(nil)
 			assert.NoError(t, err)
-		}()
+		}(i)
 	}
 	for i := 0; i < n; i++ {
 		_, e := TestDaemon.Recv()

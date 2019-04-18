@@ -15,7 +15,7 @@ test::
 	go test -cover `go list ./... | grep -v vendor`
 
 test-with-race: test
-	go test -cover -race `go list ./... | grep -v vendor`
+	go test -count=1 -cpu=1,2,4 -cover -race `go list ./... | grep -v vendor`
 
 fmt:
 	go fmt `go list ./... | grep -v vendor`
