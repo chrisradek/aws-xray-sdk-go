@@ -11,10 +11,12 @@ package xray
 import (
 	"context"
 	"encoding/json"
-	"github.com/aws/aws-xray-sdk-go/header"
+	"fmt"
 	"net"
 	"net/http"
 	"time"
+
+	"github.com/aws/aws-xray-sdk-go/header"
 )
 
 var (
@@ -32,6 +34,7 @@ func init() {
 	if TestDaemon.Connection == nil {
 		conn, err := net.ListenUDP("udp", listenerAddr)
 		if err != nil {
+			fmt.Println("Daemon connection error")
 			panic(err)
 		}
 
@@ -74,12 +77,20 @@ func (td *Testdaemon) Run() {
 }
 
 func (td *Testdaemon) Recv() (*Segment, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
 	defer cancel()
 	select {
 	case r := <-td.Channel:
+		if r.Error != nil {
+			fmt.Println("Daemon channel error")
+			fmt.Println(r.Error)
+		}
 		return r.Segment, r.Error
 	case <-ctx.Done():
+		fmt.Println("Daemon context is done")
+		if ctx.Err() != nil {
+			fmt.Println(ctx.Err())
+		}
 		return nil, ctx.Err()
 	}
 }

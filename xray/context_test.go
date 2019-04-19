@@ -10,6 +10,7 @@ package xray
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"testing"
@@ -64,6 +65,10 @@ func TestValidAnnotations(t *testing.T) {
 
 	if s.Annotations["string"] == nil {
 		fmt.Printf("%+v\n", s)
+		for _, sub := range s.Subsegments {
+			tempSeg := &Segment{}
+			fmt.Printf("Child: %+v\n", json.Unmarshal(sub, &tempSeg))
+		}
 		fmt.Printf("%+v\n", s.Annotations)
 		fmt.Println(s.Annotations)
 	}
