@@ -67,7 +67,8 @@ func TestValidAnnotations(t *testing.T) {
 		fmt.Printf("%+v\n", s)
 		for _, sub := range s.Subsegments {
 			tempSeg := &Segment{}
-			fmt.Printf("Child: %+v\n", json.Unmarshal(sub, &tempSeg))
+			json.Unmarshal(sub, &tempSeg)
+			fmt.Printf("Child: %+v\n", tempSeg)
 		}
 		fmt.Printf("%+v\n", s.Annotations)
 		fmt.Println(s.Annotations)
